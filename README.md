@@ -515,6 +515,6 @@ Internet
 
 Se logró desplegar exitosamente una aplicación de dos capas (API REST + SPA) usando tecnologías modernas de contenedores. La arquitectura adoptada resuelve el problema de CORS sin modificar la API, usando Nginx como reverse proxy dentro de la red interna de Docker. El build multi-stage del frontend reduce la imagen de ~500 MB a ~26 MB, resultando en despliegues más rápidos y menor superficie de ataque.
 
-La adaptación a macOS resultó directa gracias a que Docker Desktop abstrae las diferencias de plataforma. El reto principal no fue el sistema operativo sino la infraestructura de red del ISP: Izzi utiliza CGNAT en sus cuentas residenciales, bloqueando el port forwarding tradicional. La solución con Ngrok demostró ser efectiva e inmediata, y representa un caso de uso real documentado en la industria para entornos con restricciones de red.
+La adaptación a macOS resultó directa gracias a que Docker Desktop abstrae las diferencias de plataforma. El reto principal no fue el sistema operativo sino la infraestructura de red del ISP: Megacable utiliza CGNAT en sus cuentas residenciales, bloqueando el port forwarding tradicional. La solución con Ngrok demostró ser efectiva e inmediata, y representa un caso de uso real documentado en la industria para entornos con restricciones de red.
 
 Esta experiencia ilustra la importancia de comprender la topología de red completa al diseñar soluciones de despliegue, no solo la configuración del servidor local.
