@@ -356,21 +356,11 @@ ifconfig | grep "inet " | grep -v 127.0.0.1
 
 ---
 
-## 10. Diferencias con la guía original (Windows 11)
-
-| Aspecto                  | Windows 11 (guía original)      | macOS (esta actividad)           |
-|--------------------------|---------------------------------|----------------------------------|
-| Verificar IP local       | `ipconfig`                      | `ifconfig` / `ip addr`           |
-| Virtualización           | Hyper-V / WSL2 requerido        | Nativo (no se requiere WSL)      |
-| Backend de Docker        | WSL2                            | Virtualization.framework         |
-| Cliente DDNS             | App instalable (No-IP/DuckDNS)  | `curl` + LaunchAgent de macOS    |
-| Gestión de procesos      | Servicios de Windows            | `launchctl` / `launchd`          |
-
 ---
 
-## 11. Fase 5 — Publicación en Internet
+## 10. Fase 5 — Publicación en Internet
 
-### 11.1 Intento de Port Forwarding con DDNS (TP-Link Deco)
+### 10.1 Intento de Port Forwarding con DDNS (TP-Link Deco)
 
 Se configuró el servicio DDNS integrado del router TP-Link Deco con el dominio `mscplopez2025.tplinkdns.com`. Se verificó que el dominio resolvía correctamente la IP pública:
 
@@ -389,7 +379,7 @@ Se configuraron las siguientes reglas de reenvío de puertos en la app Deco:
 
 Sin embargo, el acceso externo no funcionó.
 
-### 11.2 Diagnóstico — CGNAT detectado
+### 10.2 Diagnóstico — CGNAT detectado
 
 Al inspeccionar la configuración WAN del router se encontró la causa:
 
@@ -413,7 +403,7 @@ Internet
 [Mac: 192.168.68.103]
 ```
 
-### 11.3 Solución — Túnel con Ngrok
+### 10.3 Solución — Túnel con Ngrok
 
 Para resolver el bloqueo de CGNAT se utilizó **Ngrok**, una herramienta que establece un túnel cifrado desde el equipo local hacia servidores en la nube, sin necesidad de abrir puertos en el router.
 
@@ -447,7 +437,7 @@ $ curl -s -o /dev/null -w "%{http_code}" \
 
 La aplicación quedó accesible públicamente desde cualquier red.
 
-### 11.4 Corrección — URL de la API en el frontend
+### 10.4 Corrección — URL de la API en el frontend
 
 Al acceder desde una URL externa, el frontend intentaba conectar con `http://localhost:3000` — resuelto en el navegador del visitante, no en el servidor. Se corrigió usando ruta relativa por defecto:
 
@@ -468,7 +458,7 @@ $ curl -o /dev/null -w "%{http_code}\n" http://localhost:8080        # → 200
 $ curl -o /dev/null -w "%{http_code}\n" http://localhost:8080/students  # → 200
 ```
 
-### 11.5 Arquitectura final con Ngrok
+### 10.5 Arquitectura final con Ngrok
 
 ```
 Internet
@@ -486,7 +476,7 @@ Internet
 [Docker: students-backend :3000]
 ```
 
-### 11.6 Comparativa de métodos de publicación
+### 10.6 Comparativa de métodos de publicación
 
 | Método             | Funciona con CGNAT | Requiere dominio | Complejidad |
 |--------------------|--------------------|------------------|-------------|
@@ -498,7 +488,7 @@ Internet
 
 ---
 
-## 12. Diferencias con la guía original (Windows 11)
+## 11. Diferencias con la guía original (Windows 11)
 
 | Aspecto                  | Windows 11 (guía original)      | macOS (esta actividad)           |
 |--------------------------|---------------------------------|----------------------------------|
@@ -511,7 +501,7 @@ Internet
 
 ---
 
-## 13. Conclusiones
+## 12. Conclusiones
 
 Se logró desplegar exitosamente una aplicación de dos capas (API REST + SPA) usando tecnologías modernas de contenedores. La arquitectura adoptada resuelve el problema de CORS sin modificar la API, usando Nginx como reverse proxy dentro de la red interna de Docker. El build multi-stage del frontend reduce la imagen de ~500 MB a ~26 MB, resultando en despliegues más rápidos y menor superficie de ataque.
 
