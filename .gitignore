@@ -1,0 +1,18 @@
+# Node
+node_modules/
+dist/
+.eslintcache
+*.tsbuildinfo
+
+# macOS
+.DS_Store
+
+# Env
+.env
+.env.local
+
+# Ngrok
+*.ngrok
+
+# Docker
+*.log
